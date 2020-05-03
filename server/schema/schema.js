@@ -1,18 +1,28 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt } = graphql;
+const {
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLSchema,
+  GraphQLID,
+  GraphQLInt,
+} = graphql;
 
 var books = [
-  { name: 'blah', genre: 'Fantasy', id: '1', authorId: '1' },
-  { name: 'blah blah', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'blah blah blah', genre: 'Sci-Fi', id: '3', authorId: '3' },
+  { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId: '1' },
+  { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId: '2' },
+  { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId: '3' },
+  { name: 'Getting Windy', genre: 'Fantasy', id: '4', authorId: '1' },
+  { name: 'Empires strike back', genre: 'Fantasy', id: '5', authorId: '2' },
+  { name: 'Earth Tones', genre: 'Sci-Fi', id: '6', authorId: '3' },
 ];
 
 var authors = [
-  { name: 'dave', age: 19, id: '1' },
-  { name: 'claire', age: 13, id: '2' },
-  { name: 'tim', age: 41, id: '3' },
+  { name: 'Dave Smith', age: 19, id: '1' },
+  { name: 'Claire Bear', age: 13, id: '2' },
+  { name: 'Tim Foolery', age: 41, id: '3' },
 ];
 
 const BookType = new GraphQLObjectType({
@@ -36,6 +46,12 @@ const AuthorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     age: { type: GraphQLInt },
     name: { type: GraphQLString },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve(parent, args) {
+        return books.filter((a) => a.authorId === parent.id);
+      },
+    },
   }),
 });
 
