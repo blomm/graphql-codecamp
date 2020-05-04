@@ -6,7 +6,7 @@ const schema = require('./schema/schema');
 
 mongoose
   .connect(
-    'mongodb+srv://mikeb:test123@graphql1-dwbwc.mongodb.net/test?retryWrites=true&w=majority',
+    'mongodb+srv://mikey:test123@graphql1-dwbwc.mongodb.net/test?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -14,6 +14,9 @@ mongoose
   )
   .then(() => {
     console.log('connected to database');
+  })
+  .catch(function (error) {
+    console.log('Error connecting: ' + error);
   });
 
 app.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
