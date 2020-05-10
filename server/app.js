@@ -22,6 +22,7 @@ mongoose
     console.log('Error connecting: ' + error);
   });
 
+// wrapper for new ApolloServer(......)
 app.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
 
 app.listen(4000, () => {
